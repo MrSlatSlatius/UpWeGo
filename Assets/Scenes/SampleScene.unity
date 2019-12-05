@@ -323,11 +323,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbceded353e329d44ab13ea952dc7968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player1: {fileID: 7512038678047148017, guid: 7855882c82537d1419b5f7622c7a6fa4, type: 3}
+  player2: {fileID: 7512038678047148017, guid: 7855882c82537d1419b5f7622c7a6fa4, type: 3}
   platform: {fileID: 1108558660111826091, guid: 6e9dbf193696fae44a0ff795de2735f3,
     type: 3}
   maxDistance: 2.46
-  moveSpeed: -0.3
-  jumpHeight: 3
+  moveSpeed: -0.96
+  jumpHeight: 2
   maxXJumpDistance: 30
   maxRange: {x: -30, y: 30}
 --- !u!4 &1350697663

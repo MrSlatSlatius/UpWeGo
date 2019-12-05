@@ -15,11 +15,17 @@ public class PlayerMovement : MonoBehaviour
     private float currentSpeed;
 
     public bool Active { get; set; } = true;
+    public Platform OnPlatform { get; private set; } = null;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         currentSpeed = speed;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        OnPlatform = hit.collider.GetComponent<Platform>();
     }
 
     private void Update()
@@ -29,16 +35,15 @@ public class PlayerMovement : MonoBehaviour
 
         // Jump
         if (Input.GetButtonDown("Jump") && isGrounded)
+        {
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+            OnPlatform = null;
+        }
     }
 
     void FixedUpdate()
     {
         UpdateGravity();
-
-        if (!Active)
-            return;
-
         UpdateColision();
         Move();
     }
@@ -48,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         //Input check
         float xMove = Input.GetAxis("Horizontal");
 
-        move = transform.right * xMove * speed;
+        move = Active ? transform.right * xMove * speed : Vector3.zero;
 
         controller.Move((move + velocity) * Time.fixedDeltaTime);
 

@@ -128,3 +128,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a340358c97e5e7b428eadb2e8883e114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  needlePrefab: {fileID: 1497541029550100195, guid: b5af4025e5d4a8a4eb387166707649b0,
+    type: 3}
