@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+    [SerializeField] private bool isFixed = false;
+
     public Vector3 Velocity { get; set; } = Vector3.zero;
+    public bool Fixed => isFixed;
 
     public void Move(Vector3 motion)
     {
