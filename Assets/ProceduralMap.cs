@@ -53,7 +53,7 @@ public class ProceduralMap : MonoBehaviour
         List<GameObject> platforms = new List<GameObject>();
         Vector3 position;
 
-        uint rnd = (uint)Random.Range(1, 2);
+        uint rnd = (uint)Random.Range(3, 6);
         for (uint j = 0; j < rnd; j++)
         {
             float x;
