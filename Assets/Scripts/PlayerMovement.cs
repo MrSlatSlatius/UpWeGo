@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -8,14 +10,25 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed = 10f;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpForce = 3f;
+
     private CharacterController controller;
     private Vector3 move;
     private Vector3 velocity;
     private bool isGrounded;
     private float currentSpeed;
+    private float xMove;
+    // Input delegates
+    private Func<bool> jumpInput;
+    private Func<float> moveInput;
 
     public bool Active { get; set; } = true;
     public Platform OnPlatform { get; private set; } = null;
+
+    public void SetInputActions(Func<bool> jump, Func<float> horizontal)
+    {
+        jumpInput = jump;
+        moveInput = horizontal;
+    }
 
     void Start()
     {
@@ -30,14 +43,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        xMove = moveInput.Invoke();
+
         if (!Active)
             return;
 
-        // Jump
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (jumpInput.Invoke() && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-            OnPlatform = null;
+            //OnPlatform = null;
         }
     }
 
@@ -50,9 +64,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        //Input check
-        float xMove = Input.GetAxis("Horizontal");
-
         move = Active ? transform.right * xMove * speed : Vector3.zero;
 
         controller.Move((move + velocity) * Time.fixedDeltaTime);

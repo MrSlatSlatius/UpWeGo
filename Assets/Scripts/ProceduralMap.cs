@@ -53,7 +53,7 @@ public class ProceduralMap : MonoBehaviour
         List<GameObject> platforms = new List<GameObject>();
         Vector3 position;
 
-        uint rnd = (uint)Random.Range(1, 2);
+        uint rnd = (uint)Random.Range(3, 6);
         for (uint j = 0; j < rnd; j++)
         {
             float x;
@@ -89,8 +89,11 @@ public class ProceduralMap : MonoBehaviour
         Vector3 pos1 = new Vector3(-3f, -8, 0);
         Vector3 pos2 = new Vector3(3f, -8, 0);
 
-        GameObject.Instantiate(player1, pos1 + Vector3.up * 2, Quaternion.identity);
-        GameObject.Instantiate(player2, pos2 + Vector3.up * 2, Quaternion.identity);
+        PlayerMovement p1 = Instantiate(player1, pos1 + Vector3.up * 2, Quaternion.identity).GetComponent<PlayerMovement>();
+        PlayerMovement p2 = Instantiate(player2, pos2 + Vector3.up * 2, Quaternion.identity).GetComponent<PlayerMovement>();
+
+        p1.SetInputActions(PlayerInputs.PlayerOneJump, PlayerInputs.PlayerOneHorizontal);
+        p2.SetInputActions(PlayerInputs.PlayerTwoJump, PlayerInputs.PlayerTwoHorizontal);
 
         InstantiatePlatform(ref pos1);
         InstantiatePlatform(ref pos2);

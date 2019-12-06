@@ -20,12 +20,12 @@ public class Needle : MonoBehaviour
         if (timer > 0)
             return;
 
-        if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0)
+        if (Input.GetAxis("PlayerOneHorizontal") == 0 && Input.GetAxis("Vertical") == 0)
             return;
 
         if (movement.Active && Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0)
             movement.Active = false;
-        else if (!movement.Active && Input.GetKeyDown(KeyCode.X))
+        else if (!movement.Active && Input.GetKeyDown(KeyCode.Z))
         {
             //movement.Active = true;
             StartCoroutine(GainControl());
@@ -33,7 +33,7 @@ public class Needle : MonoBehaviour
             NeedleController nc = go.GetComponent<NeedleController>();
 
             nc.Direction = Vector3.up * Input.GetAxis("Vertical") +
-                Vector3.right * Input.GetAxis("Horizontal");
+                Vector3.right * Input.GetAxis("PlayerOneHorizontal");
             nc.IgnorePlatform = movement.OnPlatform;
             timer = 1f;
         }
