@@ -9,11 +9,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpForce = 3f;
     private CharacterController controller;
+    [SerializeField]
+    private float drag = 1.5f;
     private Vector3 move;
     private Vector3 velocity;
     private bool isGrounded;
     private float currentSpeed;
     private bool applyGravity = true;
+    private Vector3 force = Vector3.zero;
 
     public Vector3 Motion { get; set; } = Vector3.zero;
     public bool ApplyGravity
@@ -56,6 +59,17 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+<<<<<<< HEAD:Assets/Scritps/PlayerMovement.cs
+        force = Vector3.MoveTowards(force, Vector3.zero,
+            Time.fixedDeltaTime * drag);
+        if (force.x > 0)
+        {
+            force.x -= Mathf.Round(force.x * 0.15f);
+            if (force.x < 0) force.x = 0;
+        }
+
+=======
+>>>>>>> origin/master:Assets/Scripts/PlayerMovement.cs
         if (ApplyGravity)
             UpdateGravity();
         UpdateColision();
@@ -69,7 +83,11 @@ public class PlayerMovement : MonoBehaviour
 
         move = Active ? transform.right * xMove * speed : Vector3.zero;
 
+<<<<<<< HEAD:Assets/Scritps/PlayerMovement.cs
+        controller.Move((move + velocity + Motion + force) * Time.fixedDeltaTime);
+=======
         controller.Move((move + velocity + Motion) * Time.fixedDeltaTime);
+>>>>>>> origin/master:Assets/Scripts/PlayerMovement.cs
 
         isGrounded = (controller.collisionFlags & CollisionFlags.CollidedBelow) == CollisionFlags.CollidedBelow;
 
@@ -101,5 +119,10 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -1f;
         if (!isGrounded)
             velocity.y += gravity * Time.fixedDeltaTime;
+    }
+
+    public void AddForce(Vector3 force)
+    {
+        this.force = force;
     }
 }
