@@ -11,12 +11,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpForce = 3f;
 
+    private Animator anim;
     private CharacterController controller;
     private Vector3 move;
     private Vector3 velocity;
     private bool isGrounded;
     private float currentSpeed;
     private float xMove;
+    
     // Input delegates
     private Func<bool> jumpInput;
     private Func<float> moveInput;
@@ -24,15 +26,10 @@ public class PlayerMovement : MonoBehaviour
     public bool Active { get; set; } = true;
     public Platform OnPlatform { get; private set; } = null;
 
-    public void SetInputActions(Func<bool> jump, Func<float> horizontal)
-    {
-        jumpInput = jump;
-        moveInput = horizontal;
-    }
-
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        anim = GetComponent<Animator>();
         currentSpeed = speed;
     }
 
@@ -51,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
         if (jumpInput.Invoke() && isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-            //OnPlatform = null;
         }
     }
 
@@ -59,7 +55,15 @@ public class PlayerMovement : MonoBehaviour
     {
         UpdateGravity();
         UpdateColision();
+        UpdateAnimations();
         Move();
+    }
+
+    private void UpdateAnimations()
+    {
+        anim.SetFloat("xSpeed", Math.Abs(xMove));
+        anim.SetBool("isGrounded", isGrounded);
+        anim.SetFloat("ySpeed", velocity.y);
     }
 
     private void Move()
@@ -91,5 +95,11 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -1f;
         if (!isGrounded)
             velocity.y += gravity * Time.fixedDeltaTime;
+    }
+
+    public void SetInputActions(Func<bool> jump, Func<float> horizontal)
+    {
+        jumpInput = jump;
+        moveInput = horizontal;
     }
 }

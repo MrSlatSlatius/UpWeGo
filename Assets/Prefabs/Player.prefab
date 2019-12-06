@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 261910355779625978}
   - component: {fileID: 8563350741770914629}
   - component: {fileID: 6875714687974176022}
+  - component: {fileID: 499378914341095887}
+  - component: {fileID: 2544822997984734221}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -69,7 +71,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7136812b961f8a040841c822faf23bbf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -130,3 +132,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   needlePrefab: {fileID: 1497541029550100195, guid: b5af4025e5d4a8a4eb387166707649b0,
     type: 3}
+--- !u!114 &499378914341095887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7512038678047148017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f719ca08832889f40b13d77c338b57b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &2544822997984734221
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7512038678047148017}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
