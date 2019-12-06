@@ -59,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+<<<<<<< HEAD:Assets/Scritps/PlayerMovement.cs
         force = Vector3.MoveTowards(force, Vector3.zero,
             Time.fixedDeltaTime * drag);
         if (force.x > 0)
@@ -67,6 +68,8 @@ public class PlayerMovement : MonoBehaviour
             if (force.x < 0) force.x = 0;
         }
 
+=======
+>>>>>>> origin/master:Assets/Scripts/PlayerMovement.cs
         if (ApplyGravity)
             UpdateGravity();
         UpdateColision();
@@ -80,7 +83,11 @@ public class PlayerMovement : MonoBehaviour
 
         move = Active ? transform.right * xMove * speed : Vector3.zero;
 
+<<<<<<< HEAD:Assets/Scritps/PlayerMovement.cs
         controller.Move((move + velocity + Motion + force) * Time.fixedDeltaTime);
+=======
+        controller.Move((move + velocity + Motion) * Time.fixedDeltaTime);
+>>>>>>> origin/master:Assets/Scripts/PlayerMovement.cs
 
         isGrounded = (controller.collisionFlags & CollisionFlags.CollidedBelow) == CollisionFlags.CollidedBelow;
 
