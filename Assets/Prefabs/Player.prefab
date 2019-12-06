@@ -116,6 +116,7 @@ MonoBehaviour:
   speed: 10
   gravity: -20
   jumpForce: 5
+  rigidbody: {fileID: 0}
 --- !u!114 &6875714687974176022
 MonoBehaviour:
   m_ObjectHideFlags: 0
