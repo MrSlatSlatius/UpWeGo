@@ -91,6 +91,8 @@ public class ProceduralMap : MonoBehaviour
 
         PlayerMovement p1 = Instantiate(player1, pos1 + Vector3.up * 2, Quaternion.identity).GetComponent<PlayerMovement>();
         PlayerMovement p2 = Instantiate(player2, pos2 + Vector3.up * 2, Quaternion.identity).GetComponent<PlayerMovement>();
+        p1.gameObject.tag = "P1";
+        p2.gameObject.tag = "P2";
 
         p1.SetInputActions(PlayerInputs.PlayerOneJump, PlayerInputs.PlayerOneHorizontal);
         p2.SetInputActions(PlayerInputs.PlayerTwoJump, PlayerInputs.PlayerTwoHorizontal);

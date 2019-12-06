@@ -17,6 +17,9 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded;
     private float currentSpeed;
     private float xMove;
+    //Stun
+    private float stunTime;
+    private bool stuned;
     // Input delegates
     private Func<bool> jumpInput;
     private Func<float> moveInput;
@@ -43,15 +46,17 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        xMove = moveInput.Invoke();
-
         if (!Active)
             return;
-
-        if (jumpInput.Invoke() && isGrounded)
+        if (!stuned)
         {
-            velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
-            //OnPlatform = null;
+            xMove = moveInput.Invoke();
+            if (jumpInput.Invoke() && isGrounded)
+                velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity);
+        }
+        else
+        {
+            Stuned(0);
         }
     }
 
@@ -91,5 +96,23 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -1f;
         if (!isGrounded)
             velocity.y += gravity * Time.fixedDeltaTime;
+    }
+
+    public void Stuned(float _stunTime)
+    {
+        if (stunTime == 0)
+        {
+            stuned = true;
+            stunTime = _stunTime;
+        }
+        if (stunTime > 0)
+        {
+            stunTime -= Time.fixedDeltaTime;
+        }
+        else
+        {
+            stuned = false;
+            stunTime = 0;
+        }
     }
 }
