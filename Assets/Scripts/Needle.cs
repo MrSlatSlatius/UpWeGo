@@ -19,22 +19,17 @@ public class Needle : MonoBehaviour
         timer = Mathf.Max(timer - Time.deltaTime, 0f);
         if (timer > 0)
             return;
-
-        if (Input.GetAxis("PlayerOneHorizontal") == 0 && Input.GetAxis("Vertical") == 0)
-            return;
-
-        if (movement.Active && Input.GetButtonDown("Vertical") && Input.GetAxis("Vertical") < 0)
-            movement.Active = false;
-        else if (!movement.Active && Input.GetKeyDown(KeyCode.Z))
+        movement.Active = !Input.GetKey(KeyCode.X);
+        if (!movement.Active && (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0))
         {
             //movement.Active = true;
             StartCoroutine(GainControl());
             GameObject go = Instantiate(needlePrefab, transform);
             NeedleController nc = go.GetComponent<NeedleController>();
-
-            nc.Direction = Vector3.up * Input.GetAxis("Vertical") +
-                Vector3.right * Input.GetAxis("PlayerOneHorizontal");
+            nc.Direction = Vector3.up * Mathf.Abs(Input.GetAxis("Vertical")) +
+                Vector3.right * Input.GetAxis("Horizontal");
             nc.IgnorePlatform = movement.OnPlatform;
+            nc.Player = movement;
             timer = 1f;
         }
     }

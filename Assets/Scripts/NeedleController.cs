@@ -12,6 +12,7 @@ public class NeedleController : MonoBehaviour
     [SerializeField] private float maxReachDistance = 2.3f;
     private Platform currentPlatform = null;
 
+    public PlayerMovement Player { get; set; }
     public Vector3 Direction { get; set; } = Vector3.zero;
     public Platform IgnorePlatform { get; set; } = null;
     public bool Active { get; set; } = true;
@@ -35,9 +36,27 @@ public class NeedleController : MonoBehaviour
         }
         else
         {
-            endPoint = Vector3.Lerp(endPoint, transform.position, Time.deltaTime * 10f);// currentPlatform.transform.position;
-            if (Vector3.Distance(transform.position, endPoint) < 0.1f)
-                Destroy(gameObject);
+            if (currentPlatform.Fixed)
+            {
+                Vector3 dir = (currentPlatform.transform.position + Vector3.up * 1.2f) - Player.transform.position;
+
+                Player.Move(dir.normalized * speed);
+                endPoint = currentPlatform.transform.position;
+
+                if (Vector3.Distance(currentPlatform.transform.position + Vector3.up * 1.2f, Player.transform.position) < 0.3f)
+                {
+                    Player.ApplyGravity = true;
+                    Player.Active = true;
+                    Destroy(gameObject);
+                    return;
+                }
+            }
+            else
+            {
+                endPoint = Vector3.Lerp(endPoint, transform.position, Time.deltaTime * 10f);// currentPlatform.transform.position;
+                if (Vector3.Distance(transform.position, endPoint) < 0.1f)
+                    Destroy(gameObject);
+            }
         }
 
         lineRenderer.positionCount = 2;
@@ -54,11 +73,25 @@ public class NeedleController : MonoBehaviour
             {
                 currentPlatform = p;
 
+                if (p.Fixed)
+                {
+                    Player.Active = false;
+                    Player.ApplyGravity = false;
+                    break;
+                }
+
                 Vector3 dir = (transform.position - currentPlatform.transform.position);
                 currentPlatform.Move(
                     dir.normalized +
                     dir * 2f);
 
+                break;
+            }
+
+            Item i = collider.GetComponent<Item>();
+            if (i != null)
+            {
+                Destroy(i.gameObject);
                 break;
             }
         }
