@@ -17,6 +17,10 @@ public class ProceduralMap : MonoBehaviour
     private float lastPlatformX = 0f;
     private float randomDistance = 0;
     private bool active = true;
+    List<PlayerMovement> movements = new List<PlayerMovement>();
+    List<PlayerMovement> players = new List<PlayerMovement>();
+
+    public List<PlayerMovement> Movements => movements;
 
     public bool Active
     {
@@ -40,10 +44,25 @@ public class ProceduralMap : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!Active)
+        if (!Active || movements.Count == 0)
             return;
 
-        transform.position += Vector3.up * moveSpeed * Time.fixedDeltaTime;
+        Movements.Sort((x, y) => x.transform.position.y.CompareTo(y.transform.position.y));
+
+        if (Movements[0].Controller.velocity.y < 0)
+            return;
+
+        float speed = (Movements[0].Controller.velocity).magnitude;
+        Vector3 velocity = Vector3.up * speed;
+        transform.position -= velocity * Time.fixedDeltaTime;
+        foreach (PlayerMovement m in players)
+        {
+            m.Controller.enabled = false;
+            m.transform.position -= velocity * Time.fixedDeltaTime;
+            m.Controller.enabled = true;
+        }
+        
+
         if (transform.position.y <= randomDistance)
             InstantiatePlatform();
     }
@@ -89,14 +108,16 @@ public class ProceduralMap : MonoBehaviour
         Vector3 pos1 = new Vector3(-3f, -8, 0);
         Vector3 pos2 = new Vector3(3f, -8, 0);
 
-        GameObject.Instantiate(player1, pos1 + Vector3.up * 2, Quaternion.identity);
-        GameObject.Instantiate(player2, pos2 + Vector3.up * 2, Quaternion.identity);
+        GameObject go1 = Instantiate(player1, pos1 + Vector3.up * 2, Quaternion.identity);
+        players.Add(go1.GetComponent<PlayerMovement>());
+        GameObject go2 = Instantiate(player2, pos2 + Vector3.up * 2, Quaternion.identity);
+        players.Add(go2.GetComponent<PlayerMovement>());
 
         InstantiatePlatform(ref pos1);
         InstantiatePlatform(ref pos2);
 
         List<GameObject> platforms = new List<GameObject>();
-        float yPos = -8;
+        float yPos = -6;
         Vector3 position;
         while (yPos < 10)
         {
