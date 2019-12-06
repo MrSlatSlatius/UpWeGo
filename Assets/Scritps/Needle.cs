@@ -35,6 +35,7 @@ public class Needle : MonoBehaviour
             nc.Direction = Vector3.up * Input.GetAxis("Vertical") +
                 Vector3.right * Input.GetAxis("Horizontal");
             nc.IgnorePlatform = movement.OnPlatform;
+            nc.Player = movement;
             timer = 1f;
         }
     }
