@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestoyPlatform : MonoBehaviour
+public class DestroyPlatform : MonoBehaviour
 {
     private void Update()
     {
